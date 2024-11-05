@@ -34,14 +34,15 @@ export class DataProcessorService {
     public processMovies(data: Movie[]): ProcessedMovieInformation {
         const runtime = data
             .map((d) => d["Runtime (Minutes)"])
-            .filter((r) => r !== "");
+            .filter((r) => r !== "")
+            .filter((r) => r !== 0);
 
         const revenue = data
             .map((d) => d["Revenue (Millions)"])
             .filter((r) => r !== "")
             .map((v) => v * 1_000_000);
 
-        const actorCounts = data.map(d => d.Actors.split(',').length);
+        const actorCounts = data.map((d) => d.Actors.split(",").length);
 
         return {
             runtimeAverage: this.avg(...runtime),
